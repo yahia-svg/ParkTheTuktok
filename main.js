@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-
+import { createtuktuk } from './tuktuk';
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth,innerHeight);
@@ -36,7 +36,6 @@ plane.rotation.x = -Math.PI / 2;
 mainview.add(plane);
 
 plane.receiveShadow = true;
-
 const wallmat = new THREE.MeshLambertMaterial({color:0xb8b2a4});
 for (const [x,z,w,d] of [
     [0, -MAP, MAP * 2, 0.6],
@@ -49,12 +48,24 @@ for (const [x,z,w,d] of [
     wall.castShadow = wall.receiveShadow = true;
     mainview.add(wall);
 }
+
+const tuktuk = createtuktuk();
+mainview.add(tuktuk);
+const pos = new THREE.Vector2(0,0);
+let heading = 0;
+let speed = 0;
+let rotate = 0;
+function synctuktuk(){
+    tuktuk.position.set(pos.x, 0, pos.y);
+    tuktuk.rotation.y = -heading;
+}
+synctuktuk();
+
+camera.position.set(0,10,10);
+camera.lookAt(0,0,0);
 function animate(){
     requestAnimationFrame(animate);
     renderer.render(mainview, camera);
 
 }
-
-camera.position.set(0,10,10);
-camera.lookAt(0,0,0);
 animate();
