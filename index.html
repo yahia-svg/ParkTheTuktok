@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>park-the-tuktuk</title>
   </head>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    html, body { height: 100%; overflow: hidden; background: #181c18;}
+    canvas {display: block;}
+    /* basic styling inbedded here cuz i'm too lazy */
+    #pg {
+      position: fixed; inset: 0;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      color: white; text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+    #panel {
+      position: absolute;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 15px;
+      border-radius: 10px;
+    }
+  </style>
   <body>
+    <div id="pg">
+
+    </div>
+    <script type = "module" src = "main.js"></script>
   </body>
 </html>
