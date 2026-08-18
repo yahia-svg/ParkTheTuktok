@@ -27,19 +27,34 @@ shadowcam.left = -30; shadowcam.right = 30;
 shadowcam.top = 30; shadowcam.bottom = -30;
 shadowcam.far = 80;
 mainview.add(mainlight);
-const geometry = new THREE.BoxGeometry(1,1,1);
-const material = new THREE.MeshStandardMaterial({
-    color: 0x00ff00
-});
-const cube = new THREE.Mesh(geometry, material);
-cube.position.set(0,0,0);
-cube.position.y = 2;
-cube.position.x - -1;
-mainview.add(cube);
-camera.position.z = 10;
+const MAP = 15;
+const plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(MAP * 2, MAP * 2),
+    new THREE.MeshLambertMaterial({color: 0x6b7078})
+);
+plane.rotation.x = -Math.PI / 2;
+mainview.add(plane);
 
+plane.receiveShadow = true;
+
+const wallmat = new THREE.MeshLambertMaterial({color:0xb8b2a4});
+for (const [x,z,w,d] of [
+    [0, -MAP, MAP * 2, 0.6],
+    [0, MAP, MAP * 2, 0.6],
+    [-MAP, 0, 0.6, MAP *2],
+    [MAP, 0, 0.6, MAP *2]
+]) {
+    const wall = new THREE.Mesh(new THREE.BoxGeometry(w,1.2,d),wallmat);
+    wall.position.set(x, 0.6, z);
+    wall.castShadow = wall.receiveShadow = true;
+    mainview.add(wall);
+}
 function animate(){
     requestAnimationFrame(animate);
     renderer.render(mainview, camera);
+
 }
+
+camera.position.set(0,10,10);
+camera.lookAt(0,0,0);
 animate();
